@@ -1,11 +1,6 @@
-import { render, screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { describe, expect, it, vi } from "vitest";
 import { ConsentBanner } from "../components/ConsentBanner";
-
-// Need to add userEvent to devDependencies
-// For now, use fireEvent
-import { fireEvent } from "@testing-library/react";
 
 describe("ConsentBanner", () => {
   const defaultProps = {
