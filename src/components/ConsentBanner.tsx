@@ -32,16 +32,13 @@ import {
  * Props for the ConsentBanner root component.
  */
 export interface ConsentBannerProps
-  extends UseConsentBannerOptions,
-    BannerVariants {
+  extends UseConsentBannerOptions, BannerVariants {
   /**
    * Banner content. Can be:
    * - React nodes (compound components)
    * - Render function for full control
    */
-  children:
-    | ReactNode
-    | ((props: UseConsentBannerReturn) => ReactNode);
+  children: ReactNode | ((props: UseConsentBannerReturn) => ReactNode);
 
   /**
    * Additional CSS classes for the banner container.
@@ -155,9 +152,10 @@ function ConsentBannerRoot({
 
       // Focus trapping for Tab key
       if (shouldTrapFocus && event.key === "Tab" && bannerRef.current) {
-        const focusableElements = bannerRef.current.querySelectorAll<HTMLElement>(
-          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-        );
+        const focusableElements =
+          bannerRef.current.querySelectorAll<HTMLElement>(
+            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+          );
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
 
@@ -303,7 +301,8 @@ function Actions({
  * Props for button sub-components.
  */
 export interface BannerButtonProps
-  extends ButtonVariants,
+  extends
+    ButtonVariants,
     Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
   children: ReactNode;
   /**
@@ -383,8 +382,10 @@ function DismissButton({
 /**
  * Props for the close button.
  */
-export interface CloseButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
+export interface CloseButtonProps extends Omit<
+  React.ButtonHTMLAttributes<HTMLButtonElement>,
+  "onClick"
+> {
   /**
    * Whether clicking close should dismiss (persist) or just hide (temporary).
    * @default "hide"
@@ -468,10 +469,7 @@ function Link({
   ...props
 }: LinkProps): React.ReactElement {
   return (
-    <a
-      className={cn("underline hover:no-underline", className)}
-      {...props}
-    >
+    <a className={cn("underline hover:no-underline", className)} {...props}>
       {children}
     </a>
   );
