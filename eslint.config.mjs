@@ -38,6 +38,15 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ["dist/**", "node_modules/**", "coverage/**"],
+    ignores: [
+      "dist/**",
+      "node_modules/**",
+      "coverage/**",
+      // The e2e fixture installs the packed tarball into its own node_modules
+      // and builds there. Linting either would report thousands of problems
+      // from third-party code and from generated output.
+      "e2e/fixture/node_modules/**",
+      "e2e/fixture/.next/**",
+    ],
   },
 );

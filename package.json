@@ -67,7 +67,9 @@
     "test:watch": "vitest",
     "prepublishOnly": "npm run build",
     "check": "npm run format:check && npm run typecheck && npm run lint && npm run test",
-    "prepare": "husky || true"
+    "prepare": "husky || true",
+    "e2e:setup": "sh scripts/e2e-install-fixture.sh",
+    "e2e": "npm run e2e:setup && playwright test -c e2e/playwright.config.ts"
   },
   "peerDependencies": {
     "react": "^18.0.0 || ^19.0.0",
@@ -83,6 +85,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
+    "@playwright/test": "^1.62.1",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^14.6.1",
