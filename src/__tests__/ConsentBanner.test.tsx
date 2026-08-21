@@ -123,7 +123,9 @@ describe("ConsentBanner", () => {
       <ConsentBanner {...defaultProps}>
         <ConsentBanner.Content>
           Check our{" "}
-          <ConsentBanner.Link href="/privacy">Privacy Policy</ConsentBanner.Link>
+          <ConsentBanner.Link href="/privacy">
+            Privacy Policy
+          </ConsentBanner.Link>
         </ConsentBanner.Content>
       </ConsentBanner>,
     );
