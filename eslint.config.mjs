@@ -3,6 +3,7 @@ import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksExtra from "eslint-plugin-react-hooks-extra";
+import { ESLINT_IGNORE_PATTERNS } from "@silverassist/next-testing-toolkit";
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -39,14 +40,11 @@ export default tseslint.config(
   },
   {
     ignores: [
-      "dist/**",
+      // Fixture, build-output and generated-file globs come from the harness
+      // itself, so a change there (a new generated file, say) reaches every
+      // consumer without editing this list.
+      ...ESLINT_IGNORE_PATTERNS,
       "node_modules/**",
-      "coverage/**",
-      // The e2e fixture installs the packed tarball into its own node_modules
-      // and builds there. Linting either would report thousands of problems
-      // from third-party code and from generated output.
-      "e2e/fixture/node_modules/**",
-      "e2e/fixture/.next/**",
     ],
   },
 );
