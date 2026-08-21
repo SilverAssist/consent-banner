@@ -25,7 +25,7 @@ describe("storage utilities", () => {
     });
 
     it("returns null when storage throws error", () => {
-      vi.spyOn(localStorage, "getItem").mockImplementation(() => {
+      vi.mocked(localStorage.getItem).mockImplementationOnce(() => {
         throw new Error("Storage error");
       });
 
@@ -50,7 +50,7 @@ describe("storage utilities", () => {
     });
 
     it("returns false when storage throws error", () => {
-      vi.spyOn(localStorage, "setItem").mockImplementation(() => {
+      vi.mocked(localStorage.setItem).mockImplementationOnce(() => {
         throw new Error("Storage error");
       });
 

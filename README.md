@@ -43,9 +43,7 @@ export function CookieConsent() {
         enableAnalytics();
       }}
     >
-      <ConsentBanner.Content>
-        {COOKIE_CONSENT.message}
-      </ConsentBanner.Content>
+      <ConsentBanner.Content>{COOKIE_CONSENT.message}</ConsentBanner.Content>
       <ConsentBanner.Actions>
         <ConsentBanner.AcceptButton>
           {COOKIE_CONSENT.acceptText}
@@ -118,22 +116,38 @@ export default function RootLayout({
 
 ## API Reference
 
+### Entry points
+
+| Import                                | Contains                                             |
+| ------------------------------------- | ---------------------------------------------------- |
+| `@silverassist/consent-banner`        | Everything. The documented entry — use this.         |
+| `@silverassist/consent-banner/client` | The browser-facing components and hooks only.        |
+| `@silverassist/consent-banner/styles` | Optional stylesheet for projects not using Tailwind. |
+
+The root barrel is **not** a client module: it composes the compound
+`ConsentBanner.Content` API out of the client entry's references while staying
+server-safe. That is what lets you import it directly from a Server Component
+in the Next.js App Router — no `"use client"` needed in your page.
+
+`/client` exists so that boundary survives the build and is available if you
+want to import only the browser-facing surface. You rarely need it directly.
+
 ### ConsentBanner Props
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `storageKey` | `string` | required | Unique key for storing consent state |
-| `position` | `"top" \| "bottom"` | `"bottom"` | Banner position on screen |
-| `variant` | `"default" \| "light" \| "primary" \| "minimal"` | `"default"` | Visual variant |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Banner size |
-| `type` | `"localStorage" \| "sessionStorage" \| "cookie"` | `"localStorage"` | Storage type |
-| `expiryDays` | `number` | `365` | Cookie expiry (only for cookie storage) |
-| `manual` | `boolean` | `false` | Disable auto-show on mount |
-| `onAccept` | `() => void` | - | Called when user accepts |
-| `onDismiss` | `() => void` | - | Called when user dismisses |
-| `onChange` | `(status: ConsentStatus) => void` | - | Called on any status change |
-| `className` | `string` | - | Additional CSS classes |
-| `role` | `"alert" \| "alertdialog" \| "dialog" \| "status"` | `"alertdialog"` | ARIA role |
+| Prop         | Type                                               | Default          | Description                             |
+| ------------ | -------------------------------------------------- | ---------------- | --------------------------------------- |
+| `storageKey` | `string`                                           | required         | Unique key for storing consent state    |
+| `position`   | `"top" \| "bottom"`                                | `"bottom"`       | Banner position on screen               |
+| `variant`    | `"default" \| "light" \| "primary" \| "minimal"`   | `"default"`      | Visual variant                          |
+| `size`       | `"sm" \| "default" \| "lg"`                        | `"default"`      | Banner size                             |
+| `type`       | `"localStorage" \| "sessionStorage" \| "cookie"`   | `"localStorage"` | Storage type                            |
+| `expiryDays` | `number`                                           | `365`            | Cookie expiry (only for cookie storage) |
+| `manual`     | `boolean`                                          | `false`          | Disable auto-show on mount              |
+| `onAccept`   | `() => void`                                       | -                | Called when user accepts                |
+| `onDismiss`  | `() => void`                                       | -                | Called when user dismisses              |
+| `onChange`   | `(status: ConsentStatus) => void`                  | -                | Called on any status change             |
+| `className`  | `string`                                           | -                | Additional CSS classes                  |
+| `role`       | `"alert" \| "alertdialog" \| "dialog" \| "status"` | `"alertdialog"`  | ARIA role                               |
 
 ### Sub-Components
 
@@ -142,30 +156,26 @@ export default function RootLayout({
 Container for the message content.
 
 ```tsx
-<ConsentBanner.Content align="left">
-  Your message here
-</ConsentBanner.Content>
+<ConsentBanner.Content align="left">Your message here</ConsentBanner.Content>
 ```
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `align` | `"left" \| "center" \| "right"` | `"left"` | Text alignment |
-| `className` | `string` | - | Additional CSS classes |
+| Prop        | Type                            | Default  | Description            |
+| ----------- | ------------------------------- | -------- | ---------------------- |
+| `align`     | `"left" \| "center" \| "right"` | `"left"` | Text alignment         |
+| `className` | `string`                        | -        | Additional CSS classes |
 
 #### ConsentBanner.Actions
 
 Container for action buttons.
 
 ```tsx
-<ConsentBanner.Actions layout="row">
-  {/* buttons */}
-</ConsentBanner.Actions>
+<ConsentBanner.Actions layout="row">{/* buttons */}</ConsentBanner.Actions>
 ```
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `layout` | `"row" \| "column"` | `"row"` | Button layout direction |
-| `className` | `string` | - | Additional CSS classes |
+| Prop        | Type                | Default | Description             |
+| ----------- | ------------------- | ------- | ----------------------- |
+| `layout`    | `"row" \| "column"` | `"row"` | Button layout direction |
+| `className` | `string`            | -       | Additional CSS classes  |
 
 #### ConsentBanner.AcceptButton
 
@@ -177,11 +187,11 @@ Button that marks consent as accepted.
 </ConsentBanner.AcceptButton>
 ```
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
-| `variant` | `"primary" \| "secondary" \| "ghost" \| "link"` | `"primary"` | Button variant |
-| `size` | `"sm" \| "default" \| "lg"` | `"default"` | Button size |
-| `onClick` | `() => void` | - | Additional click handler |
+| Prop      | Type                                            | Default     | Description              |
+| --------- | ----------------------------------------------- | ----------- | ------------------------ |
+| `variant` | `"primary" \| "secondary" \| "ghost" \| "link"` | `"primary"` | Button variant           |
+| `size`    | `"sm" \| "default" \| "lg"`                     | `"default"` | Button size              |
+| `onClick` | `() => void`                                    | -           | Additional click handler |
 
 #### ConsentBanner.DismissButton
 
@@ -203,8 +213,8 @@ X button for closing the banner.
 <ConsentBanner.CloseButton action="hide" />
 ```
 
-| Prop | Type | Default | Description |
-|------|------|---------|-------------|
+| Prop     | Type                  | Default  | Description           |
+| -------- | --------------------- | -------- | --------------------- |
 | `action` | `"hide" \| "dismiss"` | `"hide"` | What happens on click |
 
 #### ConsentBanner.Link
@@ -212,9 +222,7 @@ X button for closing the banner.
 Styled link for use within content.
 
 ```tsx
-<ConsentBanner.Link href="/privacy-policy">
-  Privacy Policy
-</ConsentBanner.Link>
+<ConsentBanner.Link href="/privacy-policy">Privacy Policy</ConsentBanner.Link>
 ```
 
 ### useConsentBanner Hook
@@ -226,13 +234,13 @@ import { useConsentBanner } from "@silverassist/consent-banner";
 
 function MyComponent() {
   const {
-    status,      // "pending" | "accepted" | "dismissed"
-    isVisible,   // boolean
-    accept,      // () => void
-    dismiss,     // () => void
-    reset,       // () => void - clear consent, show again
-    show,        // () => void - manually show
-    hide,        // () => void - manually hide (temporary)
+    status, // "pending" | "accepted" | "dismissed"
+    isVisible, // boolean
+    accept, // () => void
+    dismiss, // () => void
+    reset, // () => void - clear consent, show again
+    show, // () => void - manually show
+    hide, // () => void - manually hide (temporary)
   } = useConsentBanner({
     storageKey: "my-consent",
     onAccept: () => console.log("Accepted!"),
@@ -276,9 +284,7 @@ import {
 
 // Use preset values
 <ConsentBanner storageKey={ANALYTICS_CONSENT.storageKey}>
-  <ConsentBanner.Content>
-    {ANALYTICS_CONSENT.message}
-  </ConsentBanner.Content>
+  <ConsentBanner.Content>{ANALYTICS_CONSENT.message}</ConsentBanner.Content>
   <ConsentBanner.Actions>
     <ConsentBanner.AcceptButton>
       {ANALYTICS_CONSENT.acceptText}
@@ -287,7 +293,7 @@ import {
       {ANALYTICS_CONSENT.dismissText}
     </ConsentBanner.DismissButton>
   </ConsentBanner.Actions>
-</ConsentBanner>
+</ConsentBanner>;
 ```
 
 ## Styling
@@ -298,10 +304,7 @@ The component uses Tailwind CSS classes by default. Works with both v3 and v4.
 
 ```tsx
 // Custom className overrides
-<ConsentBanner
-  storageKey="consent"
-  className="bg-brand-primary text-white"
->
+<ConsentBanner storageKey="consent" className="bg-brand-primary text-white">
   {/* ... */}
 </ConsentBanner>
 ```
@@ -335,7 +338,7 @@ import { bannerVariants, cn } from "@silverassist/consent-banner";
 // Create custom variant
 const customBanner = cn(
   bannerVariants({ position: "bottom", variant: "default" }),
-  "my-custom-classes"
+  "my-custom-classes",
 );
 ```
 
@@ -377,4 +380,3 @@ PolyForm Noncommercial License 1.0.0
 ## Contributing
 
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) first.
-
