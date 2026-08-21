@@ -21,4 +21,10 @@ export default defineConfig({
   // The published package therefore shipped with no directive at all, which
   // breaks it in a Next.js App Router server context. Asserted by a build check.
   banner: '"use client";',
+  // src/styles.css is a documented, optional stylesheet for consumers not using
+  // Tailwind (README line 301, and the `./styles` export). The build never
+  // copied it, so `import "@silverassist/consent-banner/styles"` has resolved
+  // to a file that does not exist in any published version. Caught by the
+  // Next.js integration fixture, whose layout imports exactly that subpath.
+  copy: [{ from: "src/styles.css", to: "dist" }],
 });
