@@ -116,6 +116,22 @@ export default function RootLayout({
 
 ## API Reference
 
+### Entry points
+
+| Import                                | Contains                                             |
+| ------------------------------------- | ---------------------------------------------------- |
+| `@silverassist/consent-banner`        | Everything. The documented entry — use this.         |
+| `@silverassist/consent-banner/client` | The browser-facing components and hooks only.        |
+| `@silverassist/consent-banner/styles` | Optional stylesheet for projects not using Tailwind. |
+
+The root barrel is **not** a client module: it composes the compound
+`ConsentBanner.Content` API out of the client entry's references while staying
+server-safe. That is what lets you import it directly from a Server Component
+in the Next.js App Router — no `"use client"` needed in your page.
+
+`/client` exists so that boundary survives the build and is available if you
+want to import only the browser-facing surface. You rarely need it directly.
+
 ### ConsentBanner Props
 
 | Prop         | Type                                               | Default          | Description                             |
