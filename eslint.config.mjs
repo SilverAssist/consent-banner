@@ -3,6 +3,7 @@ import tseslint from "typescript-eslint";
 import prettier from "eslint-config-prettier";
 import reactPlugin from "eslint-plugin-react";
 import reactHooksExtra from "eslint-plugin-react-hooks-extra";
+import { ESLINT_IGNORE_PATTERNS } from "@silverassist/next-testing-toolkit";
 
 export default tseslint.config(
   eslint.configs.recommended,
@@ -38,6 +39,12 @@ export default tseslint.config(
     },
   },
   {
-    ignores: ["dist/**", "node_modules/**", "coverage/**"],
+    ignores: [
+      // Fixture, build-output and generated-file globs come from the harness
+      // itself, so a change there (a new generated file, say) reaches every
+      // consumer without editing this list.
+      ...ESLINT_IGNORE_PATTERNS,
+      "node_modules/**",
+    ],
   },
 );

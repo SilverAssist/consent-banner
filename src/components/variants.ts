@@ -36,22 +36,10 @@ export const bannerVariants = cva(
        * Visual variant of the banner.
        */
       variant: {
-        default: [
-          "bg-slate-900 text-white",
-          "border-t border-slate-800",
-        ],
-        dark: [
-          "bg-gray-950 text-white",
-          "border-t border-gray-900",
-        ],
-        light: [
-          "bg-white text-gray-900",
-          "border-t border-gray-200",
-        ],
-        primary: [
-          "bg-blue-600 text-white",
-          "border-t border-blue-500",
-        ],
+        default: ["bg-slate-900 text-white", "border-t border-slate-800"],
+        dark: ["bg-gray-950 text-white", "border-t border-gray-900"],
+        light: ["bg-white text-gray-900", "border-t border-gray-200"],
+        primary: ["bg-blue-600 text-white", "border-t border-blue-500"],
         minimal: [
           "bg-gray-100 text-gray-800",
           "border-t border-gray-200",
@@ -78,39 +66,33 @@ export const bannerVariants = cva(
 /**
  * Content container variants.
  */
-export const contentVariants = cva(
-  "flex-1 text-sm sm:text-base",
-  {
-    variants: {
-      align: {
-        left: "text-left",
-        center: "text-center",
-        right: "text-right",
-      },
-    },
-    defaultVariants: {
-      align: "left",
+export const contentVariants = cva("flex-1 text-sm sm:text-base", {
+  variants: {
+    align: {
+      left: "text-left",
+      center: "text-center",
+      right: "text-right",
     },
   },
-);
+  defaultVariants: {
+    align: "left",
+  },
+});
 
 /**
  * Actions container variants.
  */
-export const actionsVariants = cva(
-  "flex shrink-0 items-center gap-2",
-  {
-    variants: {
-      layout: {
-        row: "flex-row",
-        column: "flex-col",
-      },
-    },
-    defaultVariants: {
-      layout: "row",
+export const actionsVariants = cva("flex shrink-0 items-center gap-2", {
+  variants: {
+    layout: {
+      row: "flex-row",
+      column: "flex-col",
     },
   },
-);
+  defaultVariants: {
+    layout: "row",
+  },
+});
 
 /**
  * Button variants for banner actions.

@@ -35,3 +35,20 @@ pnpm-lock.yaml
 
 # TypeScript
 *.tsbuildinfo
+
+# e2e fixture artifacts
+e2e/fixture/node_modules/
+e2e/fixture/.next/
+e2e/fixture/package-lock.json
+e2e/test-results/
+test-results/
+e2e/playwright-report/
+*.tgz
+
+# --- next-testing-toolkit (generated fixture files) ---
+# The harness regenerates these on every run; only app/page.tsx is authored.
+e2e/fixture/app/layout.tsx
+e2e/fixture/next.config.mjs
+e2e/fixture/next-env.d.ts
+e2e/fixture/tsconfig.json
+e2e/fixture/package.json
