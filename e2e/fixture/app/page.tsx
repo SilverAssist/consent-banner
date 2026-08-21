@@ -6,28 +6,21 @@
 // carry a "use client" directive of its own. It did not, for its entire
 // published life -- tsup silently dropped the esbuild banner under
 // `treeshake: true` -- and no unit test could see it.
-import {
-  ConsentBanner,
-  ConsentBannerAcceptButton,
-  ConsentBannerActions,
-  ConsentBannerContent,
-  ConsentBannerDismissButton,
-  ConsentBannerLink,
-} from "@silverassist/consent-banner";
+import { ConsentBanner } from "@silverassist/consent-banner";
 
 export default function Page() {
   return (
     <main>
       <h1>consent-banner fixture</h1>
       <ConsentBanner storageKey="e2e-consent">
-        <ConsentBannerContent>
+        <ConsentBanner.Content>
           We use cookies.{" "}
-          <ConsentBannerLink href="/privacy">Learn more</ConsentBannerLink>
-        </ConsentBannerContent>
-        <ConsentBannerActions>
-          <ConsentBannerAcceptButton>Accept</ConsentBannerAcceptButton>
-          <ConsentBannerDismissButton>Dismiss</ConsentBannerDismissButton>
-        </ConsentBannerActions>
+          <ConsentBanner.Link href="/privacy">Learn more</ConsentBanner.Link>
+        </ConsentBanner.Content>
+        <ConsentBanner.Actions>
+          <ConsentBanner.AcceptButton>Accept</ConsentBanner.AcceptButton>
+          <ConsentBanner.DismissButton>Dismiss</ConsentBanner.DismissButton>
+        </ConsentBanner.Actions>
       </ConsentBanner>
     </main>
   );

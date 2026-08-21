@@ -16,26 +16,25 @@ test.beforeEach(async ({ context }) => {
   await context.clearCookies();
 });
 
-test("compound dot-notation does not survive the client boundary", async ({
+test("compound dot-notation works from a Server Component", async ({
   page,
 }) => {
-  // Documented finding, asserted so it cannot regress silently.
+  // Regression guard for the fix in this PR.
   //
-  // `ConsentBanner` is built with Object.assign(Root, { Content, ... }). When a
-  // Server Component imports the package, Next replaces the client module with
-  // client *references*, one per named export -- properties attached to a
-  // function do not survive that. `<ConsentBanner.Content>` therefore resolves
-  // to undefined in the browser and hydration dies with React error #130.
+  // `ConsentBanner` is Object.assign(Root, { Content, ... }). While the barrel
+  // was itself a client module, Next replaced it with client references -- one
+  // per named export -- and properties attached to a function were stripped:
+  // <ConsentBanner.Content> resolved to undefined and hydration died with
+  // React error #130. The README documents that dot notation 40 times, so the
+  // documented API was the broken one.
   //
-  // The README documents dot notation 40 times and never mentions the named
-  // exports, so the documented API is the broken one. The fixture uses the
-  // named exports; this spec pins the reason.
+  // The barrel now composes the compound from ./client's references while
+  // staying a server module itself. The fixture page uses dot notation
+  // exclusively, so this rendering at all is the assertion.
   await page.goto("/");
-  const compoundIsFlat = await page.evaluate(() => true);
-  expect(compoundIsFlat).toBe(true);
-  // The page rendering at all is the real assertion: it does so only because
-  // the fixture avoids dot notation.
   await expect(page.locator("h1")).toHaveText("consent-banner fixture");
+  await expect(page.getByText("We use cookies.")).toBeVisible();
+  await expect(page.getByRole("button", { name: "Accept" })).toBeVisible();
 });
 
 test("renders from a Server Component page without a client-boundary error", async ({
