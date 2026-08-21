@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "A flexible, accessible consent banner component for React. Perfect for GDPR cookie consent, privacy policy updates, and other user notifications.",
   "author": "Miguel Colmenares <me@miguelcolmenares.com>",
-  "license": "PolyForm Noncommercial License 1.0.0",
+  "license": "PolyForm-Noncommercial-1.0.0",
   "homepage": "https://github.com/SilverAssist/consent-banner#readme",
   "repository": {
     "type": "git",
