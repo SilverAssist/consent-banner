@@ -11,14 +11,14 @@ on:
 
 jobs:
   quality:
-    # publish.yml builds and releases on Node 24; testing only on 20 shipped an
-    # artifact built on a version CI never exercised.
+    # tsdown requires Node ^22.18.0 || >=24.11.0, so Node 20 cannot build this
+    # package at all. engines declares >=22.0.0 to match what CI verifies.
     name: Code Quality (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        node: ['20.x', '24.x']
+        node: ['22.x', '24.x']
     
     steps:
       - name: Checkout code
