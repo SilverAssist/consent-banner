@@ -380,3 +380,7 @@ PolyForm Noncommercial License 1.0.0
 ## Contributing
 
 Contributions are welcome! Please read our [Contributing Guide](CONTRIBUTING.md) first.
+
+---
+
+Made with ❤️ by Silver Assist
