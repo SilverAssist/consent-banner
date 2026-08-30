@@ -109,8 +109,7 @@ export const ANALYTICS_CONSENT: ConsentPreset = {
  */
 export const MARKETING_CONSENT: ConsentPreset = {
   storageKey: "marketing-consent",
-  message:
-    "Would you like to receive personalized offers and updates? We'll never spam you.",
+  message: "Would you like to receive personalized offers and updates? We'll never spam you.",
   acceptText: "Yes, keep me updated",
   dismissText: "No thanks",
   policyLink: {

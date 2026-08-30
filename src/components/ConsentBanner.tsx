@@ -1,11 +1,4 @@
-import React, {
-  type ReactNode,
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-} from "react";
+import React, { type ReactNode, useCallback, useContext, useEffect, useMemo, useRef } from "react";
 import {
   useConsentBanner,
   type UseConsentBannerOptions,
@@ -31,8 +24,7 @@ import {
 /**
  * Props for the ConsentBanner root component.
  */
-export interface ConsentBannerProps
-  extends UseConsentBannerOptions, BannerVariants {
+export interface ConsentBannerProps extends UseConsentBannerOptions, BannerVariants {
   /**
    * Banner content. Can be:
    * - React nodes (compound components)
@@ -152,10 +144,9 @@ function ConsentBannerRoot({
 
       // Focus trapping for Tab key
       if (shouldTrapFocus && event.key === "Tab" && bannerRef.current) {
-        const focusableElements =
-          bannerRef.current.querySelectorAll<HTMLElement>(
-            'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
-          );
+        const focusableElements = bannerRef.current.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])',
+        );
         const firstElement = focusableElements[0];
         const lastElement = focusableElements[focusableElements.length - 1];
 
@@ -210,20 +201,16 @@ function ConsentBannerRoot({
   }
 
   // Support render prop pattern
-  const rawContent =
-    typeof children === "function" ? children(bannerState) : children;
+  const rawContent = typeof children === "function" ? children(bannerState) : children;
 
   // Default container classes for centering and layout
-  const defaultContainerClasses =
-    "container mx-auto flex items-center justify-between gap-4 px-4";
+  const defaultContainerClasses = "container mx-auto flex items-center justify-between gap-4 px-4";
 
   // Wrap content in container unless explicitly disabled
   const content = disableContainer ? (
     rawContent
   ) : (
-    <div className={cn(defaultContainerClasses, containerClassName)}>
-      {rawContent}
-    </div>
+    <div className={cn(defaultContainerClasses, containerClassName)}>{rawContent}</div>
   );
 
   return (
@@ -258,14 +245,8 @@ export interface ContentProps extends ContentVariants {
 /**
  * Content container for the banner message.
  */
-function Content({
-  children,
-  className,
-  align,
-}: ContentProps): React.ReactElement {
-  return (
-    <div className={cn(contentVariants({ align }), className)}>{children}</div>
-  );
+function Content({ children, className, align }: ContentProps): React.ReactElement {
+  return <div className={cn(contentVariants({ align }), className)}>{children}</div>;
 }
 
 // ============================================================================
@@ -283,14 +264,8 @@ export interface ActionsProps extends ActionsVariants {
 /**
  * Container for banner action buttons.
  */
-function Actions({
-  children,
-  className,
-  layout,
-}: ActionsProps): React.ReactElement {
-  return (
-    <div className={cn(actionsVariants({ layout }), className)}>{children}</div>
-  );
+function Actions({ children, className, layout }: ActionsProps): React.ReactElement {
+  return <div className={cn(actionsVariants({ layout }), className)}>{children}</div>;
 }
 
 // ============================================================================
@@ -301,9 +276,7 @@ function Actions({
  * Props for button sub-components.
  */
 export interface BannerButtonProps
-  extends
-    ButtonVariants,
-    Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
+  extends ButtonVariants, Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onClick"> {
   children: ReactNode;
   /**
    * Additional click handler (called after state update).
@@ -463,11 +436,7 @@ export interface LinkProps extends React.AnchorHTMLAttributes<HTMLAnchorElement>
 /**
  * Styled link for use within banner content.
  */
-function Link({
-  children,
-  className,
-  ...props
-}: LinkProps): React.ReactElement {
+function Link({ children, className, ...props }: LinkProps): React.ReactElement {
   return (
     <a className={cn("underline hover:no-underline", className)} {...props}>
       {children}

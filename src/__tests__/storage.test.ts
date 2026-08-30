@@ -1,9 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
-import {
-  getStorageValue,
-  removeStorageValue,
-  setStorageValue,
-} from "../utils/storage";
+import { getStorageValue, removeStorageValue, setStorageValue } from "../utils/storage";
 
 describe("storage utilities", () => {
   describe("getStorageValue", () => {

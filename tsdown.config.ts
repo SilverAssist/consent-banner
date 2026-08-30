@@ -40,11 +40,7 @@ export default defineConfig([
     // Load-bearing: bundling ./client in here would flatten away its
     // "use client" directive and strip the compound's properties.
     deps: {
-      neverBundle: [
-        "react",
-        "react-dom",
-        "@silverassist/consent-banner/client",
-      ],
+      neverBundle: ["react", "react-dom", "@silverassist/consent-banner/client"],
     },
   },
 ]);

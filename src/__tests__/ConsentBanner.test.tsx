@@ -122,10 +122,7 @@ describe("ConsentBanner", () => {
     render(
       <ConsentBanner {...defaultProps}>
         <ConsentBanner.Content>
-          Check our{" "}
-          <ConsentBanner.Link href="/privacy">
-            Privacy Policy
-          </ConsentBanner.Link>
+          Check our <ConsentBanner.Link href="/privacy">Privacy Policy</ConsentBanner.Link>
         </ConsentBanner.Content>
       </ConsentBanner>,
     );
@@ -220,9 +217,7 @@ describe("ConsentBanner", () => {
       // Wait for requestAnimationFrame
       await new Promise((resolve) => requestAnimationFrame(resolve));
 
-      expect(document.activeElement).toBe(
-        screen.getByRole("button", { name: "Accept" }),
-      );
+      expect(document.activeElement).toBe(screen.getByRole("button", { name: "Accept" }));
     });
 
     it("does not auto-focus when autoFocus is false", async () => {

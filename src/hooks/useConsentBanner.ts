@@ -124,9 +124,7 @@ export function __clearVisibilityStore(): void {
  * });
  * ```
  */
-export function useConsentBanner(
-  options: UseConsentBannerOptions,
-): UseConsentBannerReturn {
+export function useConsentBanner(options: UseConsentBannerOptions): UseConsentBannerReturn {
   const {
     storageKey,
     onAccept,
@@ -155,10 +153,7 @@ export function useConsentBanner(
 
   // Track visibility separately
   const isVisible = useSyncExternalStore(
-    useCallback(
-      (callback) => subscribeVisibility(storageKey, callback),
-      [storageKey],
-    ),
+    useCallback((callback) => subscribeVisibility(storageKey, callback), [storageKey]),
     () => getVisibility(storageKey),
     () => false,
   );
@@ -167,10 +162,7 @@ export function useConsentBanner(
   // Check storage directly to avoid hydration timing issues with useSyncExternalStore
   useEffect(() => {
     if (!manual) {
-      const currentStatus = getConsentStatus(
-        storageKey,
-        storageOptionsRef.current,
-      );
+      const currentStatus = getConsentStatus(storageKey, storageOptionsRef.current);
       if (currentStatus === "pending") {
         setVisibility(storageKey, true);
       }
@@ -192,19 +184,12 @@ export function useConsentBanner(
     const handleNavigation = () => {
       if (hasNavigated) return;
 
-      const currentStatus = getConsentStatus(
-        storageKey,
-        storageOptionsRef.current,
-      );
+      const currentStatus = getConsentStatus(storageKey, storageOptionsRef.current);
       if (currentStatus === "pending") {
         hasNavigated = true;
         // Defer state updates to avoid "useInsertionEffect must not schedule updates" error
         queueMicrotask(() => {
-          setStorageValue(
-            storageKey,
-            ACCEPTED_VALUE,
-            storageOptionsRef.current,
-          );
+          setStorageValue(storageKey, ACCEPTED_VALUE, storageOptionsRef.current);
           setVisibility(storageKey, false);
         });
       }
@@ -235,16 +220,9 @@ export function useConsentBanner(
 
       // Component unmount also counts as navigation (only if not already navigated)
       if (!hasNavigated) {
-        const currentStatus = getConsentStatus(
-          storageKey,
-          storageOptionsRef.current,
-        );
+        const currentStatus = getConsentStatus(storageKey, storageOptionsRef.current);
         if (currentStatus === "pending") {
-          setStorageValue(
-            storageKey,
-            ACCEPTED_VALUE,
-            storageOptionsRef.current,
-          );
+          setStorageValue(storageKey, ACCEPTED_VALUE, storageOptionsRef.current);
           setVisibility(storageKey, false);
         }
       }

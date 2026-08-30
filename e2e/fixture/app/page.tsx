@@ -14,8 +14,7 @@ export default function Page() {
       <h1>consent-banner fixture</h1>
       <ConsentBanner storageKey="e2e-consent">
         <ConsentBanner.Content>
-          We use cookies.{" "}
-          <ConsentBanner.Link href="/privacy">Learn more</ConsentBanner.Link>
+          We use cookies. <ConsentBanner.Link href="/privacy">Learn more</ConsentBanner.Link>
         </ConsentBanner.Content>
         <ConsentBanner.Actions>
           <ConsentBanner.AcceptButton>Accept</ConsentBanner.AcceptButton>

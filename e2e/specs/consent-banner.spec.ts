@@ -16,9 +16,7 @@ test.beforeEach(async ({ context }) => {
   await context.clearCookies();
 });
 
-test("compound dot-notation works from a Server Component", async ({
-  page,
-}) => {
+test("compound dot-notation works from a Server Component", async ({ page }) => {
   // Regression guard for the fix in this PR.
   //
   // `ConsentBanner` is Object.assign(Root, { Content, ... }). While the barrel
@@ -37,9 +35,7 @@ test("compound dot-notation works from a Server Component", async ({
   await expect(page.getByRole("button", { name: "Accept" })).toBeVisible();
 });
 
-test("renders from a Server Component page without a client-boundary error", async ({
-  page,
-}) => {
+test("renders from a Server Component page without a client-boundary error", async ({ page }) => {
   await page.goto("/");
   // Were the "use client" directive missing from the built file -- which is
   // how this package shipped for its entire published life -- the page would
@@ -60,16 +56,12 @@ test("serves the documented ./styles subpath", async ({ page }) => {
   // markup instead of to the contract.
   await page.goto("/");
   const token = await page.evaluate(() =>
-    getComputedStyle(document.documentElement)
-      .getPropertyValue("--consent-banner-bg")
-      .trim(),
+    getComputedStyle(document.documentElement).getPropertyValue("--consent-banner-bg").trim(),
   );
   expect(token, "styles.css defines its design tokens").toBe("#1f2937");
 });
 
-test("accepting hides the banner and persists the decision", async ({
-  page,
-}) => {
+test("accepting hides the banner and persists the decision", async ({ page }) => {
   await page.goto("/");
   await page.getByRole("button", { name: "Accept" }).click();
   await expect(page.getByText("We use cookies.")).toBeHidden();
