@@ -1,24 +1,21 @@
 {
+  "extends": "@silverassist/npm-package-standards/tsconfig/react",
   "compilerOptions": {
+    // rootDir/outDir/include/exclude aren't in the shared base: TypeScript
+    // resolves path-valued compilerOptions in an extended config relative to
+    // that config file's own location, not the consumer's.
+    "outDir": "./dist",
+    "rootDir": "./src",
+    // Also required, even though it isn't path-valued: extending a config
+    // from a different package resolves lib.*.d.ts inconsistently when that
+    // package's own typescript version differs from this one -- restating
+    // it is the confirmed fix.
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "noEmit": true,
+    "isolatedModules": true,
     "paths": {
       "@silverassist/consent-banner/client": ["./src/client.ts"]
-    },
-    "target": "ES2020",
-    "lib": ["DOM", "DOM.Iterable", "ES2020"],
-    "module": "ESNext",
-    "moduleResolution": "bundler",
-    "jsx": "react-jsx",
-    "strict": true,
-    "noEmit": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "isolatedModules": true,
-    "declaration": true,
-    "declarationMap": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    }
   },
   "include": ["src/**/*"],
   "exclude": ["node_modules", "dist", "**/*.test.ts", "**/*.test.tsx"]

@@ -27,10 +27,7 @@ export const bannerVariants = cva(
       position: {
         top: "top-0",
         bottom: "bottom-0",
-        center: [
-          "top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2",
-          "max-w-lg rounded-lg",
-        ],
+        center: ["top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2", "max-w-lg rounded-lg"],
       },
       /**
        * Visual variant of the banner.
@@ -40,11 +37,7 @@ export const bannerVariants = cva(
         dark: ["bg-gray-950 text-white", "border-t border-gray-900"],
         light: ["bg-white text-gray-900", "border-t border-gray-200"],
         primary: ["bg-blue-600 text-white", "border-t border-blue-500"],
-        minimal: [
-          "bg-gray-100 text-gray-800",
-          "border-t border-gray-200",
-          "shadow-sm",
-        ],
+        minimal: ["bg-gray-100 text-gray-800", "border-t border-gray-200", "shadow-sm"],
       },
       /**
        * Banner size.
@@ -112,27 +105,15 @@ export const buttonVariants = cva(
        * Button visual variant.
        */
       variant: {
-        primary: [
-          "bg-white text-gray-900",
-          "hover:bg-gray-100",
-          "focus:ring-white",
-        ],
+        primary: ["bg-white text-gray-900", "hover:bg-gray-100", "focus:ring-white"],
         secondary: [
           "bg-transparent text-current",
           "border border-current",
           "hover:bg-white/10",
           "focus:ring-white",
         ],
-        ghost: [
-          "bg-transparent text-current",
-          "hover:bg-white/10",
-          "focus:ring-white",
-        ],
-        link: [
-          "bg-transparent text-current underline",
-          "hover:no-underline",
-          "px-1 py-0",
-        ],
+        ghost: ["bg-transparent text-current", "hover:bg-white/10", "focus:ring-white"],
+        link: ["bg-transparent text-current underline", "hover:no-underline", "px-1 py-0"],
       },
       /**
        * Button size.

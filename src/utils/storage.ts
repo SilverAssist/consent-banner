@@ -27,10 +27,7 @@ function isBrowser(): boolean {
  * @param options - Storage options
  * @returns The stored value or null
  */
-export function getStorageValue(
-  key: string,
-  options: StorageOptions = {},
-): string | null {
+export function getStorageValue(key: string, options: StorageOptions = {}): string | null {
   if (!isBrowser()) {
     return null;
   }
@@ -58,11 +55,7 @@ export function getStorageValue(
  * @param options - Storage options
  * @returns True if successful
  */
-export function setStorageValue(
-  key: string,
-  value: string,
-  options: StorageOptions = {},
-): boolean {
+export function setStorageValue(key: string, value: string, options: StorageOptions = {}): boolean {
   if (!isBrowser()) {
     return false;
   }
@@ -91,10 +84,7 @@ export function setStorageValue(
  * @param options - Storage options
  * @returns True if successful
  */
-export function removeStorageValue(
-  key: string,
-  options: StorageOptions = {},
-): boolean {
+export function removeStorageValue(key: string, options: StorageOptions = {}): boolean {
   if (!isBrowser()) {
     return false;
   }

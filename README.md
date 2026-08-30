@@ -45,9 +45,7 @@ export function CookieConsent() {
     >
       <ConsentBanner.Content>{COOKIE_CONSENT.message}</ConsentBanner.Content>
       <ConsentBanner.Actions>
-        <ConsentBanner.AcceptButton>
-          {COOKIE_CONSENT.acceptText}
-        </ConsentBanner.AcceptButton>
+        <ConsentBanner.AcceptButton>{COOKIE_CONSENT.acceptText}</ConsentBanner.AcceptButton>
       </ConsentBanner.Actions>
     </ConsentBanner>
   );
@@ -61,24 +59,15 @@ import { ConsentBanner } from "@silverassist/consent-banner";
 
 export function CookieConsent() {
   return (
-    <ConsentBanner
-      storageKey="cookie-consent"
-      position="bottom"
-      variant="default"
-    >
+    <ConsentBanner storageKey="cookie-consent" position="bottom" variant="default">
       <ConsentBanner.Content>
-        We use cookies to ensure that we give you the best experience on our
-        website. If you continue to use this site we will assume that you are
-        happy with it.{" "}
-        <ConsentBanner.Link href="/privacy-policy">
-          Learn more
-        </ConsentBanner.Link>
+        We use cookies to ensure that we give you the best experience on our website. If you
+        continue to use this site we will assume that you are happy with it.{" "}
+        <ConsentBanner.Link href="/privacy-policy">Learn more</ConsentBanner.Link>
       </ConsentBanner.Content>
       <ConsentBanner.Actions>
         <ConsentBanner.AcceptButton>Accept</ConsentBanner.AcceptButton>
-        <ConsentBanner.DismissButton variant="secondary">
-          Decline
-        </ConsentBanner.DismissButton>
+        <ConsentBanner.DismissButton variant="secondary">Decline</ConsentBanner.DismissButton>
       </ConsentBanner.Actions>
     </ConsentBanner>
   );
@@ -91,19 +80,13 @@ export function CookieConsent() {
 // app/layout.tsx
 import { ConsentBanner } from "@silverassist/consent-banner";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
       <body>
         {children}
         <ConsentBanner storageKey="cookie-consent">
-          <ConsentBanner.Content>
-            We use cookies to improve your experience.
-          </ConsentBanner.Content>
+          <ConsentBanner.Content>We use cookies to improve your experience.</ConsentBanner.Content>
           <ConsentBanner.Actions>
             <ConsentBanner.AcceptButton>Accept</ConsentBanner.AcceptButton>
           </ConsentBanner.Actions>
@@ -198,9 +181,7 @@ Button that marks consent as accepted.
 Button that dismisses without accepting.
 
 ```tsx
-<ConsentBanner.DismissButton variant="secondary">
-  Decline
-</ConsentBanner.DismissButton>
+<ConsentBanner.DismissButton variant="secondary">Decline</ConsentBanner.DismissButton>
 ```
 
 (Same props as AcceptButton)
@@ -286,12 +267,8 @@ import {
 <ConsentBanner storageKey={ANALYTICS_CONSENT.storageKey}>
   <ConsentBanner.Content>{ANALYTICS_CONSENT.message}</ConsentBanner.Content>
   <ConsentBanner.Actions>
-    <ConsentBanner.AcceptButton>
-      {ANALYTICS_CONSENT.acceptText}
-    </ConsentBanner.AcceptButton>
-    <ConsentBanner.DismissButton>
-      {ANALYTICS_CONSENT.dismissText}
-    </ConsentBanner.DismissButton>
+    <ConsentBanner.AcceptButton>{ANALYTICS_CONSENT.acceptText}</ConsentBanner.AcceptButton>
+    <ConsentBanner.DismissButton>{ANALYTICS_CONSENT.dismissText}</ConsentBanner.DismissButton>
   </ConsentBanner.Actions>
 </ConsentBanner>;
 ```

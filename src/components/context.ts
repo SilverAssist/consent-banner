@@ -13,8 +13,7 @@ export interface ConsentBannerContextValue extends UseConsentBannerReturn {
 /**
  * Context for sharing state between ConsentBanner compound components.
  */
-export const ConsentBannerContext =
-  createContext<ConsentBannerContextValue | null>(null);
+export const ConsentBannerContext = createContext<ConsentBannerContextValue | null>(null);
 
 /**
  * Hook to access ConsentBanner context.
@@ -26,9 +25,7 @@ export function useConsentBannerContext(): ConsentBannerContextValue {
   const context = useContext(ConsentBannerContext);
 
   if (!context) {
-    throw new Error(
-      "useConsentBannerContext must be used within a ConsentBanner component",
-    );
+    throw new Error("useConsentBannerContext must be used within a ConsentBanner component");
   }
 
   return context;
