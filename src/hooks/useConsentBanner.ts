@@ -169,8 +169,10 @@ export function useConsentBanner(options: UseConsentBannerOptions): UseConsentBa
     }
   }, [manual, storageKey]);
 
-  // Auto-accept on navigation if enabled and still pending
-  // Detects both traditional navigation (unmount) and SPA navigation (history events)
+  // Auto-accept on navigation if enabled and still pending.
+  // Detects real navigation only: back/forward (popstate), the page actually
+  // being left (pagehide), and SPA route changes that land on a different
+  // URL (pushState/replaceState, href-diffed -- see below).
   useEffect(() => {
     if (!autoAcceptOnNavigate) {
       return;
@@ -179,7 +181,7 @@ export function useConsentBanner(options: UseConsentBannerOptions): UseConsentBa
     // Track if cleanup has run to prevent double-saves
     let hasNavigated = false;
 
-    // Handler for SPA navigation (intercepts history.pushState/replaceState)
+    // Handler for real navigation (SPA route change, back/forward, page unload)
     // Uses queueMicrotask to defer state updates and avoid React commit phase conflicts
     const handleNavigation = () => {
       if (hasNavigated) return;
@@ -195,37 +197,51 @@ export function useConsentBanner(options: UseConsentBannerOptions): UseConsentBa
       }
     };
 
-    // Intercept history.pushState to detect Next.js client-side navigation
+    // Intercept history.pushState/replaceState to detect SPA client-side
+    // navigation. Frameworks call these routinely for reasons that never
+    // change the URL (Next.js's own App Router does this for scroll
+    // restoration and shallow route bookkeeping) -- only a call that
+    // actually changes `location.href` is a real navigation.
+    const wrapHistoryMethod = (method: typeof history.pushState): typeof history.pushState => {
+      return function (this: History, ...args) {
+        const beforeHref = location.href;
+        const result = method.apply(this, args);
+        if (location.href !== beforeHref) {
+          handleNavigation();
+        }
+        return result;
+      };
+    };
+
     const originalPushState = history.pushState.bind(history);
     const originalReplaceState = history.replaceState.bind(history);
 
-    history.pushState = function (...args) {
-      handleNavigation();
-      return originalPushState(...args);
-    };
+    history.pushState = wrapHistoryMethod(originalPushState);
+    history.replaceState = wrapHistoryMethod(originalReplaceState);
 
-    history.replaceState = function (...args) {
-      handleNavigation();
-      return originalReplaceState(...args);
-    };
-
-    // Also listen for popstate (back/forward navigation)
+    // Also listen for popstate (back/forward navigation) and pagehide (the
+    // page is actually being left -- tab close, cross-document navigation;
+    // survives bfcache correctly, unlike beforeunload).
     window.addEventListener("popstate", handleNavigation);
+    window.addEventListener("pagehide", handleNavigation);
 
     return () => {
       // Restore original methods
       history.pushState = originalPushState;
       history.replaceState = originalReplaceState;
       window.removeEventListener("popstate", handleNavigation);
+      window.removeEventListener("pagehide", handleNavigation);
 
-      // Component unmount also counts as navigation (only if not already navigated)
-      if (!hasNavigated) {
-        const currentStatus = getConsentStatus(storageKey, storageOptionsRef.current);
-        if (currentStatus === "pending") {
-          setStorageValue(storageKey, ACCEPTED_VALUE, storageOptionsRef.current);
-          setVisibility(storageKey, false);
-        }
-      }
+      // Deliberately NOT treated as navigation: a component can unmount for
+      // reasons that have nothing to do with the user leaving the page --
+      // a parent conditionally stops rendering it, React Strict Mode's
+      // dev-only double-invoke of effects (mount -> cleanup -> mount again,
+      // synchronously, on every first render in development), Fast Refresh,
+      // an error boundary reset. Treating unmount itself as "navigated away"
+      // auto-accepted consent (and hid the banner) on literally the first
+      // render in any Next.js app with the default `reactStrictMode: true` --
+      // real navigation-away is already covered by `pagehide` and the
+      // href-diffed history hooks above.
     };
   }, [autoAcceptOnNavigate, storageKey]);
 
