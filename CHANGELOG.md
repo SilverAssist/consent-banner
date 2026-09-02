@@ -5,6 +5,15 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.1.2] - 2026-09-02
+
+### Fixed
+
+- **`autoAcceptOnNavigate` silently auto-accepted consent (hiding the banner) on the very first render in any Next.js app with the default `reactStrictMode: true`, and on any benign `history.replaceState`/`pushState` call that didn't actually change the URL.** Two compounding bugs:
+  - The effect's cleanup treated **any component unmount** as "the user navigated away" — including React Strict Mode's dev-only double-invoke of effects (mount → cleanup → mount again, synchronously, on every first render), a parent conditionally unmounting the component, Fast Refresh, or an error boundary reset. None of those are the user leaving the page. Unmount is no longer treated as navigation at all; real navigation-away is now covered by a `pagehide` listener instead.
+  - The `history.pushState`/`replaceState` interception fired on every call to those methods, regardless of whether the URL actually changed. Next.js's own App Router calls `replaceState` routinely for internal bookkeeping (scroll restoration, shallow route state) with the _same_ href — that was being mistaken for a real SPA navigation. Both methods are now href-diffed: only a call that actually changes `location.href` counts as navigation.
+  - Net effect before this fix: a fresh visitor to a site using `autoAcceptOnNavigate` could see the banner flash and disappear (or never appear at all) within milliseconds of page load, with consent recorded as "accepted" despite never seeing or responding to it.
+
 ## [0.1.1] - 2026-08-24
 
 ### Fixed
