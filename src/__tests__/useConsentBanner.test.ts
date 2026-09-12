@@ -1,5 +1,4 @@
 import { act, renderHook } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
 import { useConsentBanner } from "../hooks/useConsentBanner";
 
 describe("useConsentBanner", () => {
@@ -26,8 +25,8 @@ describe("useConsentBanner", () => {
   });
 
   it("accepts consent and hides banner", () => {
-    const onAccept = vi.fn();
-    const onChange = vi.fn();
+    const onAccept = jest.fn();
+    const onChange = jest.fn();
 
     const { result } = renderHook(() =>
       useConsentBanner({ ...defaultOptions, onAccept, onChange }),
@@ -44,8 +43,8 @@ describe("useConsentBanner", () => {
   });
 
   it("dismisses consent and hides banner", () => {
-    const onDismiss = vi.fn();
-    const onChange = vi.fn();
+    const onDismiss = jest.fn();
+    const onChange = jest.fn();
 
     const { result } = renderHook(() =>
       useConsentBanner({ ...defaultOptions, onDismiss, onChange }),
@@ -62,7 +61,7 @@ describe("useConsentBanner", () => {
   });
 
   it("resets consent state", () => {
-    const onChange = vi.fn();
+    const onChange = jest.fn();
 
     const { result } = renderHook(() => useConsentBanner({ ...defaultOptions, onChange }));
 

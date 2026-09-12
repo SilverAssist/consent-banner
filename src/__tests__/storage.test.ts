@@ -1,4 +1,3 @@
-import { describe, expect, it, vi } from "vitest";
 import { getStorageValue, removeStorageValue, setStorageValue } from "../utils/storage";
 
 describe("storage utilities", () => {
@@ -21,7 +20,7 @@ describe("storage utilities", () => {
     });
 
     it("returns null when storage throws error", () => {
-      vi.mocked(localStorage.getItem).mockImplementationOnce(() => {
+      jest.mocked(localStorage.getItem).mockImplementationOnce(() => {
         throw new Error("Storage error");
       });
 
@@ -46,7 +45,7 @@ describe("storage utilities", () => {
     });
 
     it("returns false when storage throws error", () => {
-      vi.mocked(localStorage.setItem).mockImplementationOnce(() => {
+      jest.mocked(localStorage.setItem).mockImplementationOnce(() => {
         throw new Error("Storage error");
       });
 

@@ -1,5 +1,4 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { describe, expect, it, vi } from "vitest";
 import { ConsentBanner } from "../components/ConsentBanner";
 
 describe("ConsentBanner", () => {
@@ -62,7 +61,7 @@ describe("ConsentBanner", () => {
   });
 
   it("calls onAccept callback when accept is clicked", () => {
-    const onAccept = vi.fn();
+    const onAccept = jest.fn();
 
     render(
       <ConsentBanner {...defaultProps} onAccept={onAccept}>
