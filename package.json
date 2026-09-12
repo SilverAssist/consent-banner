@@ -136,6 +136,9 @@
   "overrides": {
     "eslint-plugin-react-hooks-extra": {
       "typescript": "$typescript"
+    },
+    "eslint-plugin-react": {
+      "eslint": "$eslint"
     }
   },
   "lint-staged": {
